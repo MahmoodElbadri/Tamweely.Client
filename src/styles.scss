@@ -846,6 +846,8 @@ a:hover::after {
   background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
   border-color: var(--danger);
   color: #991b1b;
+  /* Add these lines for better dark mode support */
+  --alert-text-color: #991b1b;
 }
 
 .alert-info {
@@ -1929,3 +1931,23 @@ router-outlet + * {
 .transition-slow { transition: var(--transition-slow); }
 
 .hover-opacity-100:hover { opacity: 1; }
+
+/* SIMPLE FIX FOR ALERT TEXT VISIBILITY */
+.alert-danger,
+.alert-warning,
+.alert-success,
+.alert-info {
+  color: inherit !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .alert-danger { color: #991b1b !important; }
+  .alert-warning { color: #92400e !important; }
+  .alert-success { color: #065f46 !important; }
+  .alert-info { color: #1e40af !important; }
+}
+
+.theme-dark .alert-danger { color: #991b1b !important; }
+.theme-dark .alert-warning { color: #92400e !important; }
+.theme-dark .alert-success { color: #065f46 !important; }
+.theme-dark .alert-info { color: #1e40af !important; }

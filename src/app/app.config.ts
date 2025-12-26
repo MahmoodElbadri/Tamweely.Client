@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import { provideToastr } from "ngx-toastr";
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {HttpClientModule, provideHttpClient} from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,8 +15,9 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true
+      preventDuplicates: false //i love it when i can see the same message multiple times
     }),
-    importProvidersFrom(BsDatepickerModule.forRoot())
+    importProvidersFrom(BsDatepickerModule.forRoot()),
+    provideHttpClient()
   ]
 };
