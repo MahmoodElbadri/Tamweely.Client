@@ -92,7 +92,7 @@
           <a [routerLink]="['address-form', ad.id]" class="btn btn-sm btn-outline-primary flex-grow-1">
             <span class="me-1">✏️</span> Edit
           </a>
-          <button class="btn btn-sm btn-outline-danger flex-grow-1">
+          <button (click)="onDelete(ad.id)" class="btn btn-sm btn-outline-danger flex-grow-1">
             <span class="me-1">🗑️</span> Delete
           </button>
         </div>
