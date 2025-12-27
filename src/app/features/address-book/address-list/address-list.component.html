@@ -12,6 +12,78 @@
     </a>
   </div>
 
+  <div class="card card-glass shadow-sm mb-5 border-0">
+    <div class="card-body p-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-4">
+          <label
+            class="form-label text-xs uppercase tracking-wider text-muted font-bold mb-2"
+            >Search</label
+          >
+          <div class="input-group shadow-sm">
+            <span class="input-group-text bg-white border-end-0"> 🔍 </span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0"
+              placeholder="Name, email, or phone..."
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearch()"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label
+            class="form-label text-xs uppercase tracking-wider text-muted font-bold mb-2"
+            >Born After</label
+          >
+          <div class="input-group shadow-sm">
+            <span class="input-group-text bg-white border-end-0">📅</span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0"
+              placeholder="From Date"
+              bsDatepicker
+              [bsConfig]="bsConfig"
+              [(ngModel)]="fromDate"
+              (ngModelChange)="onSearch()"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label
+            class="form-label text-xs uppercase tracking-wider text-muted font-bold mb-2"
+            >Born Before</label
+          >
+          <div class="input-group shadow-sm">
+            <span class="input-group-text bg-white border-end-0">📅</span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0"
+              placeholder="To Date"
+              bsDatepicker
+              [bsConfig]="bsConfig"
+              [(ngModel)]="toDate"
+              (ngModelChange)="onSearch()"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-md-2">
+          <button
+            class="btn btn-outline-danger w-100 shadow-sm d-flex align-items-center justify-content-center gap-2"
+            (click)="clearSearch()"
+            [disabled]="!searchTerm && !fromDate && !toDate"
+          >
+            <span>✕</span> Reset
+          </button>
+        </div>
+        <button (click)="exportAsExcel()" class="btn btn-outline-warning">Export as Excel</button>
+      </div>
+    </div>
+  </div>
+
   <div class="row g-4">
     @if(addresses && addresses.length > 0) { @for(ad of addresses; track ad.id)
     {
@@ -89,10 +161,16 @@
 
         <!-- Card Footer with Actions -->
         <div class="card-footer p-3 d-flex gap-2">
-          <a [routerLink]="['address-form', ad.id]" class="btn btn-sm btn-outline-primary flex-grow-1">
+          <a
+            [routerLink]="['address-form', ad.id]"
+            class="btn btn-sm btn-outline-primary flex-grow-1"
+          >
             <span class="me-1">✏️</span> Edit
           </a>
-          <button (click)="onDelete(ad.id)" class="btn btn-sm btn-outline-danger flex-grow-1">
+          <button
+            (click)="onDelete(ad.id)"
+            class="btn btn-sm btn-outline-danger flex-grow-1"
+          >
             <span class="me-1">🗑️</span> Delete
           </button>
         </div>

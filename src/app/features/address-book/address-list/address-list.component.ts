@@ -6,12 +6,15 @@ import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { environment } from '../../../../environments/environment.development';
 import { ToastrService } from 'ngx-toastr';
+import { BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import Swal from 'sweetalert2';
+import {FormsModule} from '@angular/forms';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-address-list',
   standalone: true,
-  imports: [ DatePipe, RouterModule ],
+  imports: [DatePipe, RouterModule, BsDatepickerModule, FormsModule],
   templateUrl: './address-list.component.html',
   styleUrl: './address-list.component.scss',
 })
@@ -24,6 +27,17 @@ export class AddressListComponent implements OnInit {
   //variables
   addresses: AddressBookDto[] = [];
   imageUrl = environment.imageApiUrl;
+  searchTerm: string = '';
+  fromDate: Date | null = null;
+  toDate: Date | null = null;
+
+  //configs
+  bsConfig = {
+    isAnimated: true,
+    dateInputFormat: 'YYYY-MM-DD',
+    containerClass: 'theme-green',
+    adaptivePosition: true,
+  };
 
   ngOnInit(): void {
     this.getAllAddressBooks();
@@ -33,38 +47,57 @@ export class AddressListComponent implements OnInit {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-danger mx-2', // Style valid for your Bootstrap/Custom CSS
-        cancelButton: 'btn btn-secondary mx-2'
+        cancelButton: 'btn btn-secondary mx-2',
       },
-      buttonsStyling: false
+      buttonsStyling: false,
     });
 
-    swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-      reverseButtons: true // Puts "Cancel" on the left, "Delete" on the right
-    }).then((result) => {
-      
-      if (result.isConfirmed) {
-        // User clicked "Yes", so we call the API
-        this.addressService.deleteAddressBook(id).subscribe({
-          next: () => {
-            // 1. Show success message (using Toastr to keep it quick)
-            this.toastr.success('Address deleted successfully');
-            
-            // 2. Refresh the list (remove item from array locally to avoid API call)
-            this.addresses = this.addresses.filter(a => a.id !== id);
-          },
-          error: (err) => {
-            this.toastr.error('Failed to delete address');
-            console.error(err);
-          }
-        });
-      }
-    });
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true, // Puts "Cancel" on the left, "Delete" on the right
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          // User clicked "Yes", so we call the API
+          this.addressService.deleteAddressBook(id).subscribe({
+            next: () => {
+              // 1. Show success message (using Toastr to keep it quick)
+              this.toastr.success('Address deleted successfully');
+
+              // 2. Refresh the list (remove item from array locally to avoid API call)
+              this.addresses = this.addresses.filter((a) => a.id !== id);
+            },
+            error: (err) => {
+              this.toastr.error('Failed to delete address');
+              console.error(err);
+            },
+          });
+        }
+      });
+  }
+
+  onSearch() {
+    this.addressService
+      .searchForAddress(this.searchTerm, this.fromDate, this.toDate)
+      .subscribe({
+        next: (res) => {
+          this.addresses = res;
+        },
+        error: (err) => console.error(err),
+      });
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.fromDate = null;
+    this.toDate = null;
+    this.onSearch(); // Reload all data
   }
 
   getAllAddressBooks() {
@@ -76,5 +109,18 @@ export class AddressListComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  exportAsExcel(){
+    this.addressService.exportAsExcel(this.searchTerm, this.fromDate, this.toDate).subscribe({
+      next:(blob)=>{
+        saveAs(blob, `address-book-${new Date().toISOString().split('T')[0]}.xlsx`);
+        this.toastr.success("Successfully Exported");
+      },
+      error:(error)=>{
+        this.toastr.error('Failed to download Excel file');
+        console.error('Download error:', error);
+      }
+    })
   }
 }
