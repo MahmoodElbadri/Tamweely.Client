@@ -35,8 +35,8 @@
       }
       </div>
       <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-primary col-6">Login</button>
-        <a href="/auth/register" class="btn btn-link col-6">Register</a>
+        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-outline-success col-6">Login</button>
+        <a href="/auth/register" class="btn btn-outline-primary col-6">Register</a>
       </div>
 
     </form>

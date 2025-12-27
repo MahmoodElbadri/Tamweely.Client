@@ -80,7 +80,7 @@
         }
       </div>
       <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-outline-success col-6">Register</button>
+        <button type="submit" [disabled]="registerForm.invalid" class="btn btn-outline-success col-6">Register</button>
         <a [routerLink]="['/auth/login']" class="btn btn-outline-primary col-6">Already a member</a>
       </div>
     </form>

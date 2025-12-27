@@ -5,7 +5,8 @@ import { routes } from './app.routes';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import { provideToastr } from "ngx-toastr";
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {HttpClientModule, provideHttpClient} from '@angular/common/http';
+import {HttpClientModule, provideHttpClient, withInterceptors} from '@angular/common/http';
+import {authInterceptor} from './auth/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,6 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: false //i love it when i can see the same message multiple times
     }),
     importProvidersFrom(BsDatepickerModule.forRoot()),
-    provideHttpClient()
+    provideHttpClient(withInterceptors([authInterceptor]))
   ]
 };
