@@ -1,11 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AddressBookService } from '../../address-book/services/address-book.service';
 import { Router } from '@angular/router';
+import { AddressBookDto } from '../../models/address-book-dto';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-address-list',
   standalone: true,
-  imports: [],
+  imports: [ DatePipe ],
   templateUrl: './address-list.component.html',
   styleUrl: './address-list.component.scss',
 })
@@ -15,6 +17,7 @@ export class AddressListComponent implements OnInit {
   router = inject(Router);
 
   //variables
+  addresses: AddressBookDto[] = [];
 
   ngOnInit(): void {
     this.getAllAddressBooks();
@@ -23,7 +26,7 @@ export class AddressListComponent implements OnInit {
   getAllAddressBooks() {
     return this.addressService.getAllAddressBooks().subscribe({
       next: (res) => {
-        console.log(res);
+        this.addresses = res;
       },
       error: (error) => {
         console.log(error);

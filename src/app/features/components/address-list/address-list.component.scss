@@ -1,0 +1,42 @@
+/* Additional spacing utilities */
+.space-y-2 > * + * { margin-top: var(--space-2); }
+.space-y-3 > * + * { margin-top: var(--space-3); }
+.space-y-4 > * + * { margin-top: var(--space-4); }
+
+/* Text truncation */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Border top */
+.border-top {
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Grid gap utilities */
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+
+/* Flex utilities */
+.flex-grow { flex-grow: 1; }
+
+/* Line clamp for address */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Space utilities */
+.mb-1 { margin-bottom: var(--space-1); }
+.mt-4 { margin-top: var(--space-4); }
+.pt-3 { padding-top: var(--space-3); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+
+/* Text size */
+.text-sm { font-size: var(--font-size-sm); }

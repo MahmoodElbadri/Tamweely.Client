@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
+import { AddressBookDto } from '../../models/address-book-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,6 @@ export class AddressBookService {
   }
 
   getAllAddressBooks() {
-    return this.http.get(`${this.apiUrl}address-book`);
+    return this.http.get<AddressBookDto[]>(`${this.apiUrl}address-book`);
   }
 }
