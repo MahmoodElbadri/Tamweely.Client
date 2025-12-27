@@ -1,9 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AddressBookService } from '../../address-book/services/address-book.service';
 import { Router } from '@angular/router';
-import { AddressBookDto } from '../../models/address-book-dto';
+import { AddressBookDto } from '../models/address-book-dto';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-address-list',
@@ -19,6 +20,7 @@ export class AddressListComponent implements OnInit {
 
   //variables
   addresses: AddressBookDto[] = [];
+  imageUrl = environment.imageApiUrl;
 
   ngOnInit(): void {
     this.getAllAddressBooks();

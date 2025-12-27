@@ -29,8 +29,8 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
    constructor() {
-     if(this.authService.token !== null){
-       this.router.navigate(['/address-book/list']);
+     if(this.authService.token() !== null){
+       this.router.navigate(['/address-book']);
      }
    }
 
@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
       next:(response)=>{
         if(response.message === null){
           this.toastr.success("Register Successfully");
-           this.router.navigate(['/address-book/list']);
+           this.router.navigate(['/address-book']);
         }else {
           this.toastr.error(response.message);
         }

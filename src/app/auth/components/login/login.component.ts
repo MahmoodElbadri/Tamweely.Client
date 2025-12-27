@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import {LoginDto} from '../../models/login-dto';
-import { Router } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -9,7 +9,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
   selector: 'app-login',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit{
 
   constructor() {
      if(this.authService.token() !== null){
-       this.router.navigate(['/address-book/list']);
+       this.router.navigate(['/address-book']);
      }
   }
 
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit{
       next:(res)=>{
         if(res.message === null){
           this.toastr.success("Login Successfully");
-          this.router.navigate(['/address-book/list']);
+          this.router.navigate(['/address-book']);
         }else {
           this.toastr.error(res.message);
         }
