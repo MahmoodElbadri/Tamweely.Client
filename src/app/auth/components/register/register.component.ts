@@ -28,11 +28,11 @@ export class RegisterComponent implements OnInit {
   registerDto!: RegisterDto;
   registerForm!: FormGroup;
 
-  // constructor() {
-  //   if(this.authService.token !== null){
-  //     this.router.navigate(['/addressBook']);
-  //   }
-  // }
+   constructor() {
+     if(this.authService.token !== null){
+       this.router.navigate(['/address-book/list']);
+     }
+   }
 
   ngOnInit(): void {
     this.initializingRegisterForm();
@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
       next:(response)=>{
         if(response.message === null){
           this.toastr.success("Register Successfully");
-          // this.router.navigate(['/auth/login']);
+           this.router.navigate(['/address-book/list']);
         }else {
           this.toastr.error(response.message);
         }

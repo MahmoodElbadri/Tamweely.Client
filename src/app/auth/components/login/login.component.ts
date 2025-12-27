@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit{
   }
 
   constructor() {
-    // if(this.authService.token !== null){
-    //   this.router.navigate(['/addressBook']);
-    // }
+     if(this.authService.token() !== null){
+       this.router.navigate(['/address-book/list']);
+     }
   }
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit{
       next:(res)=>{
         if(res.message === null){
           this.toastr.success("Login Successfully");
-          // this.router.navigate(['/addressBook']);
+          this.router.navigate(['/address-book/list']);
         }else {
           this.toastr.error(res.message);
         }

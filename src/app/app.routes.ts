@@ -8,7 +8,7 @@ export const routes: Routes = [
     loadChildren:() => import('./auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'address',
+    path: 'address-book',
     canActivate: [authGuard],
     loadChildren:()=>import('./features/address-book/address-book.module').then(m => m.AddressBookModule),
   },

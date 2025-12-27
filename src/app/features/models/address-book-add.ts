@@ -1,20 +1,10 @@
-export interface AddressBookAdd{
-  /*
-  public string Fullname { get; set; }
-public string MobileNumber { get; set; }
-public DateTime DateOfBirth { get; set; }
-public string Address { get; set; }
-public string Email { get; set; }
-public IFormFile? Photo { get; set; }
-public int JobTitleId { get; set; }
-public int DepartmentId { get; set; }
-   */
-  fullname: string;
+export interface AddressBookAdd {
+  fullName: string;
   mobileNumber: string;
-  dateOfBirth: string;
+  dateOfBirth: Date;
   address: string;
   email: string;
-  photo: string;
+  photo: any;
   jobTitleId: number;
   departmentId: number;
 }
