@@ -3,11 +3,12 @@ import { AddressBookService } from '../../address-book/services/address-book.ser
 import { Router } from '@angular/router';
 import { AddressBookDto } from '../../models/address-book-dto';
 import { DatePipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-address-list',
   standalone: true,
-  imports: [ DatePipe ],
+  imports: [ DatePipe, RouterModule ],
   templateUrl: './address-list.component.html',
   styleUrl: './address-list.component.scss',
 })

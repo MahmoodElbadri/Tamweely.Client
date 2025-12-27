@@ -5,9 +5,9 @@
       <h1 class="text-gradient mb-2">Address Book</h1>
       <p class="text-muted">Total: {{addresses?.length || 0}} contacts</p>
     </div>
-    <button class="btn btn-outline-primary hover-lift">
+    <a [routerLink]="['/address-book/address-form']" class="btn btn-outline-primary hover-lift">
       <i class="icon me-2">➕</i> Add New
-    </button>
+    </a>
   </div>
 
   <!-- Address Cards - Horizontal Row Layout -->
@@ -22,10 +22,10 @@
               <div class="card-header d-flex align-center gap-3 p-4">
                 <div class="position-relative">
                   <div class="rounded-full overflow-hidden" style="width: 60px; height: 60px;">
-                    <img [src]="ad.photoPath || 'https://via.placeholder.com/60x60?text=No+Photo'"
+                    <img [src]="ad.photoPath || 'https://placehold.co/600x400'"
                          alt="{{ad.fullname}}"
                          class="card-img"
-                         onerror="this.src='https://via.placeholder.com/60x60?text=No+Photo'">
+                         onerror="this.src='https://placehold.co/600x400'">
                   </div>
                   <span class="position-absolute bottom-0 end-0 badge badge-gradient">{{ad.age}}</span>
                 </div>
